@@ -1,4 +1,4 @@
-# Step 06: 
+# Step 06:  Decoupled multiple injections
 
 In a more realistic scenario, we would be able to inject multiple HTTP handlers in our router without having to manually inject each of them.
 
@@ -61,4 +61,4 @@ func main() {
 
 Now run your application. You should be able to call the `/hello` and `/status` routes.
 
-If so, you shall now proceed to the [final step](../step-final/README.md).
+If so, you shall now proceed to the [next step](../step-07/README.md).
