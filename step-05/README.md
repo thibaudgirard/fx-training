@@ -16,10 +16,10 @@ fx.Provide(
 
 ## Tasks
 
-1. Make `StatusHandler` implement the `RouterHandler` interface (see `route_handler.go`).
-2. Annotate the `StatusHandler` constructor to provide a `RouterHandler` implementation.
-3. Make the `NewRouter` constructor accept a `RouterHandler` dependency instead of a `StatusHandler`.
-4. Make the router load the `StatusHandler` pattern.
+1. Make `StatusHandler` implement the `RouteHandler` interface (see `route_handler.go`).
+2. Annotate the `StatusHandler` constructor to provide a `RouteHandler` implementation.
+3. Make the `NewRouter` constructor accept a `RouteHandler` dependency instead of a `StatusHandler`.
+4. Make the router load the injected `RouteHandler` pattern.
 
 If you have done everything correctly, your application should still work without any difference.
 

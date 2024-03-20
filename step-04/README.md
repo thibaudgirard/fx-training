@@ -23,6 +23,7 @@ logger.Error().Msg("An error message")
 Now run your application and call the `/status` endpoint to see if the logger is working.
 
 Our goal is to see something like this:
+
 ![Logger output](./assets/logs.png)
 
 

@@ -79,7 +79,7 @@ The FX lifecycle is a sequence of steps that are executed when the application s
           OnStart: func(ctx context.Context) error {
                 fmt.Println("App is starting...")
                 return nil
-		  },
+		        },
           OnStop: func(ctx context.Context) error {
               fmt.Println("App is stopping...")
               return nil
@@ -105,7 +105,7 @@ In this step, you'll find a `server.go` file that contains two functions:
 1. Provide the `NewServer` function in the FX application.
 2. Use the `fx.Lifecycle` object to start (`server.ListenAndServe`) and stop (`server.Shutdown`) the server in the `StartServer` function.
 3. Invoke the `StartServer` function in the FX application.
-4. Run the application  (`go run step02/*`) and test the server: `curl http://localhost:8080/`
+4. Run the application  (`go run step02/*.go`) and test the server: `curl http://localhost:8080/`
 
 At this point, you should have a running web server that responds to incoming requests.
 The response, for now, is always `404 Not found`.
