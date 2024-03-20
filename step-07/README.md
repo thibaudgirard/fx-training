@@ -36,7 +36,7 @@ func main() {
 
 ## Tasks
 
-1. Reorganize your code in multiple packages using module to handle dependencies injection for each of them.
+1. Reorganize your code in multiple packages using FX modules to handle dependencies injection for each of them.
 
 There is no perfect answer to this last step. But you can check the [next step](../step-08/README.md) for a possible solution.
 
