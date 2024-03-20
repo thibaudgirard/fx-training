@@ -7,7 +7,7 @@ Before going to the very first step of this journey, we need to make sure your s
 First, check if you have Go installed with the right version `1.22.X`. Then, run the following command:
 
 ```bash
-go run step-00/*
+go run step-00/*.go
 ```
 
 It should display the FX version installed.
