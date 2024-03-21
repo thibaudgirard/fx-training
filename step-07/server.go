@@ -14,14 +14,15 @@ func NewServer(router *chi.Mux) *http.Server {
 	return &http.Server{Addr: ":8080", Handler: router}
 }
 
-func StartServer(lc fx.Lifecycle, server *http.Server, logger *zerolog.Logger) {
+func StartServer(lc fx.Lifecycle, server *http.Server, logger *zerolog.Logger, shutdowner fx.Shutdowner) {
 	lc.Append(fx.Hook{
 		OnStart: func(_ context.Context) error {
 			logger.Info().Msg(fmt.Sprintf("HTTP server listening on %s", server.Addr))
 			go func() {
 				if err := server.ListenAndServe(); err != nil {
 					if !errors.Is(err, http.ErrServerClosed) {
-						panic(err)
+						logger.Error().Err(err).Caller().Msg("HTTP Server start failed")
+						shutdowner.Shutdown()
 					}
 				}
 			}()
