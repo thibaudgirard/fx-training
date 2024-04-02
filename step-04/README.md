@@ -20,7 +20,7 @@ chiRouter.Method(http.MethodGet, "/status", statusHandler)
 
 ## Tasks
 
-1. Provide the `NewRouter` function int the FX app
+1. Provide the `NewRouter` function in the FX app
 2. Use the router in the `NewServer` function as an HTTP server handler
 3. Create a new `StatusHandler` struct implementing the `http.Handler` interface, it should respond with the `OK` string
 4. Create a `NewStatusHandler` function and provide it to the FX app
