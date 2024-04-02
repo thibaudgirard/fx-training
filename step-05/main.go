@@ -10,6 +10,5 @@ func main() {
 		fx.Invoke(StartServer),
 		fx.Provide(NewRouter),
 		fx.Provide(NewStatusHandler),
-		fx.Provide(NewLogger),
 	).Run()
 }

@@ -1,7 +1,7 @@
 package http
 
 import (
-	"dojo-fx/step-08/handler"
+	"dojo-fx/step-09/handler"
 	"github.com/go-chi/chi/v5"
 )
 

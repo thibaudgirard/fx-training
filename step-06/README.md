@@ -1,64 +1,26 @@
-# Step 06:  Decoupled multiple injections
+# Step 05: Decouple registration
 
-In a more realistic scenario, we would be able to inject multiple HTTP handlers in our router without having to manually inject each of them.
+Our router constructor has a direct dependency on the `StatusHandler`. This is not ideal as it makes the router constructor less reusable. We can use the `fx` library to decouple the registration of the `StatusHandler` and the `Router`.
 
 ## Documentation
 
-### FX Tag
+FX lets you annotate the dependencies to provide more contextual information.
 
-We've already seen that we can annotate de dependency in FX using `fx.Annotate`. Now we will use the same function to add a _tag_ annotation.
-
-We will use the tag `group` which allows to create a named collection.
+Here is an example to tell FX to provide a concrete implementation for an interface.
 
 ```go
-// A new custom type
-type MyType struct {
-    // ...
-}
-
-// A constructor for MyType
-func NewMyType() *MyType {
-    // ...
-}
-
-// Another constructor for MyType
-func NewMyTypeBis() *MyType {
-    // ...
-}
-
-// A function that needs a collection of MyType
-func INeedAMyTypeCollection(_ []MyType) {
-    // ...
-}
-
-func main() {
-    fx.New(
-        fx.Provide(
-            // Put the result in the "mytypes" group/collection
-            fx.Annotate(NewMyType), fx.ResultTags(`group:"mytypes"`)
-        ),
-        fx.Provide(
-            // Put the result in the "mytypes" group/collection
-            fx.Annotate(NewMyTypeBis), fx.ResultTags(`group:"mytypes"`)
-        ),
-        fx.Invoke(
-            // Use the "mytypes" group/collection as a parameter
-            fx.Annotate(INeedAMyTypeCollection, fx.ParamTags(`group:"mutypes"`)),
-        ),
-    ).Run()
-}
+fx.Provide(
+    fx.Annotate(NewConcreteTypeConstructor, fx.As(new(InterfaceType))),
+),
 ```
-
- - ``fx.ResultTags(`group:"mytypes"`)`` tells FX that the provided result is part of a group named `mytypes`. 
- - ``fx.ParamTags(`group:"mytypes"`)`` tells FX that the parameter is the group formed by all results tagged with `group:"mytypes"`.
 
 ## Tasks
 
-1. In `main.go`, fix the `AsRouteHandler` function implementation: it should return a tagged fx service to be injected in a `routeHandlers` group/collection.
-2. Use this function to provide and tag the `HelloHandler` and `StatusHandler` in `main.go`.
-3. Make the `NewRouter` function accept a collection of `RouteHandler`.
-4. Make sure FX will inject the tagged collection in `NewRouter`.
+1. Make `StatusHandler` implement the `RouteHandler` interface (see `route_handler.go`).
+2. Annotate the `StatusHandler` constructor to provide a `RouteHandler` implementation.
+3. Make the `NewRouter` constructor accept a `RouteHandler` dependency instead of a `StatusHandler`.
+4. Make the router load the injected `RouteHandler` pattern.
 
-Now run your application. You should be able to call the `/hello` and `/status` routes.
+If you have done everything correctly, your application should still work without any difference.
 
 If so, you shall now proceed to the [next step](../step-07/README.md).

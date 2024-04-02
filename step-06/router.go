@@ -2,12 +2,10 @@ package main
 
 import "github.com/go-chi/chi/v5"
 
-func NewRouter(rh RouteHandler) *chi.Mux {
+func NewRouter(sh *StatusHandler) *chi.Mux {
 	router := chi.NewRouter()
 
-	for _, route := range rh.Pattern() {
-		router.Method(route.Method, route.Path, rh)
-	}
+	router.Method("GET", "/status", sh)
 
 	return router
 }
