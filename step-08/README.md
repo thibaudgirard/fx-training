@@ -1,6 +1,6 @@
-# Step 07: Decouple registration
+# Step 07: Modules
 
-You can now try to plit your code in multiple packages and use fx module to organize your code.
+You can now try to split your code in multiple packages and use fx module to organize your code.
 
 ## Documentation
 

@@ -6,7 +6,7 @@ In a more realistic scenario, we would be able to inject multiple HTTP handlers 
 
 ### FX Tag
 
-We've already seen that we can annotate de dependency in FX using `fx.Annotate`. Now we will use the same function to add a _tag_ annotation.
+We've already seen that we can annotate a dependency in FX using `fx.Annotate`. Now we will use the same function to add a _tag_ annotation.
 
 We will use the tag `group` which allows to create a named collection.
 

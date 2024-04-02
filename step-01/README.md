@@ -2,7 +2,7 @@
 
 ## Documentation
 
-To create a new application, use `fx.New()` which returns a `*fx.App`. 
+To create a new application, use `fx.New()` which returns an `*fx.App`. 
 Then, you can call `Run()` on the newly created application to start it.
 
 ## Tasks
@@ -26,6 +26,6 @@ You can also see that even if you just created an empty application, FX is alrea
 
  - `fx.Lifecycle` is used to manage the lifecycle of the application. We'll talk more about it later.
  - `fx.Shutdowner` is used to shutdown the application gracefully.
- - `fx.DotGraph` is used to generate a graph of the application's dependency graph. It's provided as a string that can be given to a [graphviz tool](https://dreampuf.github.io/GraphvizOnline/) to generate a visual representation of the application's dependency graph.
+ - `fx.DotGraph` is used to generate a graph of the application's dependencies. It's provided as a string that can be given to a [graphviz tool](https://dreampuf.github.io/GraphvizOnline/) to generate a visual representation of the application's dependency graph.
 
 All good? You shall now proceed to the [next step](../step-02/README.md).

@@ -14,7 +14,7 @@ It should display the FX version installed.
 
 ## What are we going to do?
 
-We're going to create a simple application that handle and respond to HTTP requests.
+We're going to create a simple application that handles and responds to HTTP requests.
 
 But our real goal is to learn how to use dependency injection with FX.
 
