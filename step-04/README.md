@@ -1,4 +1,4 @@
-# Step 03: Add a router and a first handler
+# Step 04: Add a router and a first handler
 
 We now want to be able to handle a request on a `/status` route and respond with the `OK` string.
 

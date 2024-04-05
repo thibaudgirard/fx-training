@@ -1,4 +1,4 @@
-# Step 04: Add a logger
+# Step 05: Add a logger
 
 Now we want to be able to log information to know what's happening in our application.
 

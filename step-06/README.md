@@ -1,4 +1,4 @@
-# Step 05: Decouple registration
+# Step 06: Decouple registration
 
 Our router constructor has a direct dependency on the `StatusHandler`. This is not ideal as it makes the router constructor less reusable. We can use the `fx` library to decouple the registration of the `StatusHandler` and the `Router`.
 

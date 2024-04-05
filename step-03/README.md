@@ -1,4 +1,4 @@
-# Step 02: Add an HTTP server
+# Step 03: Start & stop HTTP server
 
 We now have an FX application with an HTTP server. 
 

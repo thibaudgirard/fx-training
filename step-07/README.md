@@ -1,4 +1,4 @@
-# Step 06:  Decoupled multiple injections
+# Step 07:  Decoupled multiple injections
 
 In a more realistic scenario, we would be able to inject multiple HTTP handlers in our router without having to manually inject each of them.
 
@@ -43,7 +43,7 @@ func main() {
         ),
         fx.Invoke(
             // Use the "mytypes" group/collection as a parameter
-            fx.Annotate(INeedAMyTypeCollection, fx.ParamTags(`group:"mutypes"`)),
+            fx.Annotate(INeedAMyTypeCollection, fx.ParamTags(`group:"mytypes"`)),
         ),
     ).Run()
 }
