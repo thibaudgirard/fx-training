@@ -5,5 +5,8 @@ import (
 )
 
 func main() {
-	fx.New().Run()
+	fx.New(
+		fx.Provide(NewServer),
+		fx.Invoke(ServerStart),
+	).Run()
 }
