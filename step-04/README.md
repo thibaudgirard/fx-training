@@ -1,37 +1,56 @@
-# Step 04: Add a router and a first handler
+# Step 03: Start & stop HTTP server
 
-We now want to be able to handle a request on a `/status` route and respond with the `OK` string.
+We now have an FX application with an HTTP server. 
+
+Our next goal is to start and stop the HTTP server when the application starts and stops.
 
 ## Documentation
 
-In the `router.go` file, you'll find a new function to create a new Chi router.
+### FX lifecycle
 
-This router can be given to our server as the main router to handle requests:
+The FX lifecycle is a sequence of steps that are executed when the application starts and stops as follows:
 
+![FX lifecycle](assets/lc.png)
+
+As we've seen earlier, FX provides, by default, a `LifeCycle` object that can be used to add hooks to the application lifecycle. 
+   
+This FX object can be injected in any function. It lets you add `fx.Hook` to the application lifecycle, start & stop events. 
+
+Example:
 ```go
-http.Server{Addr: ":8080", Handler: chiRouter}
-```
+package main
 
-You can provide a handler for a specific route using the `Method` function on the router:
+import (
+    "go.uber.org/fx"
+    "fmt"
+)
 
-```go
-chiRouter.Method(http.MethodGet, "/status", statusHandler)
+func DoSomething(lc fx.Lifecycle) {
+    lc.Append(fx.Hook{
+        OnStart: func(ctx context.Context) error {
+              fmt.Println("App is starting...")
+              return nil
+              },
+        OnStop: func(ctx context.Context) error {
+            fmt.Println("App is stopping...")
+            return nil
+        },
+   })
+}
+
+func main() {
+      fx.New(
+          fx.Invoke(DoSomething),
+      ).Run()
+}
 ```
 
 ## Tasks
 
-1. Provide the `NewRouter` function in the FX app
-2. Use the router in the `NewServer` function as an HTTP server handler
-3. Create a new `StatusHandler` struct implementing the `http.Handler` interface, it should respond with the `OK` string
-4. Create a `NewStatusHandler` function and provide it to the FX app
-5. Update the `NewRouter` function to use the `StatusHandler` for the `GET /status` route
+1. Update the `ServerStart` function implementation and make it use the `fx.Lifecycle` object to start (`server.ListenAndServe()`) and stop (`server.Shutdown()`) the server.
+2. Run the application  (`go run step-03/*.go`) and test the server: `curl http://localhost:8080/`
 
-Run the application, the following command should return `OK`:
+At this point, you should have a running web server that responds to incoming requests.
+The response, for now, is always `404 Not found`.
 
-```sh
-curl http://localhost:8080/status
-```
-
-Any other route should return a `404 Not Found` error.
-
-If you get the right responses, you shall now proceed to the [next step](../step-05/README.md).
+If you have the right output, you shall now proceed to the [next step](../step-05/README.md).

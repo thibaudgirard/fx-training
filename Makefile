@@ -90,3 +90,11 @@ run-09: run-step
 .PHONY: watch-09
 watch-09: DOJO_FX_STEP=09
 watch-09: watch-step
+
+.PHONY: run-10
+run-10: DOJO_FX_STEP=10
+run-10: run-step
+
+.PHONY: watch-10
+watch-10: DOJO_FX_STEP=10
+watch-10: watch-step

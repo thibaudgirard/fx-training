@@ -1,18 +1,25 @@
 package main
 
 import (
-	"dojo-fx/step-09/handler"
-	"dojo-fx/step-09/http"
-	"dojo-fx/step-09/log"
-	"dojo-fx/step-09/repository"
 	"go.uber.org/fx"
 )
 
 func main() {
 	fx.New(
-		handler.Module,
-		repository.Module,
-		http.Module,
-		log.Module,
+		fx.Provide(NewServer),
+		fx.Supply(&Config{Port: 8080}),
+		fx.Provide(AsRouteHandler(NewHelloHandler)),
+		fx.Provide(AsRouteHandler(NewStatusHandler)),
+		fx.Provide(fx.Annotate(NewRouter, fx.ParamTags(`group:"routeHandlers"`))),
+		fx.Provide(NewLogger),
+		fx.Invoke(StartServer),
 	).Run()
+}
+
+func AsRouteHandler(h any) any {
+	return fx.Annotate(
+		h,
+		fx.As(new(RouteHandler)),
+		fx.ResultTags(`group:"routeHandlers"`),
+	)
 }

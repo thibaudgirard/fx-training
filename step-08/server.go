@@ -10,8 +10,8 @@ import (
 	"net/http"
 )
 
-func NewServer(router *chi.Mux) *http.Server {
-	return &http.Server{Addr: ":8080", Handler: router}
+func NewServer(router *chi.Mux, cfg *Config) *http.Server {
+	return &http.Server{Addr: fmt.Sprintf(":%d", cfg.Port), Handler: router}
 }
 
 func StartServer(lc fx.Lifecycle, server *http.Server, logger *zerolog.Logger, shutdowner fx.Shutdowner) {

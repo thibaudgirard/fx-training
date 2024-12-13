@@ -1,26 +1,30 @@
-# Step 06: Decouple registration
+# Step 05: Add a logger
 
-Our router constructor has a direct dependency on the `StatusHandler`. This is not ideal as it makes the router constructor less reusable. We can use the `fx` library to decouple the registration of the `StatusHandler` and the `Router`.
+Now we want to be able to log information to know what's happening in our application.
 
 ## Documentation
 
-FX lets you annotate the dependencies to provide more contextual information.
+In the `logger.go` file, you'll find a new function to create a new logger.
 
-Here is an example to tell FX to provide a concrete implementation for an interface.
+This logger can be used as follows:
 
 ```go
-fx.Provide(
-    fx.Annotate(NewConcreteTypeConstructor, fx.As(new(InterfaceType))),
-),
+logger.Info().Msg("An info message")
+logger.Warn().Msg("A warning message")
+logger.Error().Msg("An error message")
 ```
 
 ## Tasks
 
-1. Make `StatusHandler` implement the `RouteHandler` interface (see `route_handler.go`).
-2. Annotate the `StatusHandler` constructor to provide a `RouteHandler` implementation.
-3. Make the `NewRouter` constructor accept a `RouteHandler` dependency instead of a `StatusHandler`.
-4. Make the router load the injected `RouteHandler` pattern.
+1. Use the `NewLogger` function to provide a logger to the app
+2. Use the logger to log information about the server starting and stopping
+3. Use the logger to log information about the server receiving a status request
 
-If you have done everything correctly, your application should still work without any difference.
+Now run your application and call the `/status` endpoint to see if the logger is working.
 
-If so, you shall now proceed to the [next step](../step-07/README.md).
+Our goal is to see something like this:
+
+![Logger output](./assets/logs.png)
+
+
+If you get the right output, you shall now proceed to the [next step](../step-07/README.md).

@@ -2,19 +2,13 @@
 
 We now have an FX application with an HTTP server. 
 
-Our next goal is to start and stop the HTTP server when the application starts and stops.
+It could be great to provide some configuration instead of having static strings.
 
 ## Documentation
 
-### FX lifecycle
+### FX supply
 
-The FX lifecycle is a sequence of steps that are executed when the application starts and stops as follows:
-
-![FX lifecycle](assets/lc.png)
-
-As we've seen earlier, FX provides, by default, a `LifeCycle` object that can be used to add hooks to the application lifecycle. 
-   
-This FX object can be injected in any function. It lets you add `fx.Hook` to the application lifecycle, start & stop events. 
+The FX Supply provides instantiated values for dependency injection as if they had been provided using a constructor that simply returns them.
 
 Example:
 ```go
@@ -22,35 +16,35 @@ package main
 
 import (
     "go.uber.org/fx"
-    "fmt"
 )
 
-func DoSomething(lc fx.Lifecycle) {
-    lc.Append(fx.Hook{
-        OnStart: func(ctx context.Context) error {
-              fmt.Println("App is starting...")
-              return nil
-              },
-        OnStop: func(ctx context.Context) error {
-            fmt.Println("App is stopping...")
-            return nil
-        },
-   })
+type Conf struct {
+	AppName string
+}
+
+type App struct {
+	Name string
+}
+
+func NewApp(conf *Conf) App {
+	return App{Name: conf.AppName}
 }
 
 func main() {
       fx.New(
-          fx.Invoke(DoSomething),
+		  fx.Provide(NewApp),
+          fx.Supply(&Conf{AppName: "MyApp"}),
       ).Run()
 }
 ```
 
 ## Tasks
 
-1. Update the `ServerStart` function implementation and make it use the `fx.Lifecycle` object to start (`server.ListenAndServe()`) and stop (`server.Shutdown()`) the server.
-2. Run the application  (`go run step-03/*.go`) and test the server: `curl http://localhost:8080/`
+1. Add in `config.go` a new struct Config with a Port property.
+2. In the `main` function, use `fx.Supply` to create an instance of our new config with a port number.
+3. Update `server.go` to provide the configuration in the constructor. 
 
-At this point, you should have a running web server that responds to incoming requests.
-The response, for now, is always `404 Not found`.
+Your web server should be working like the last step. Try to change the port number, and you should see it
+in the console log.
 
 If you have the right output, you shall now proceed to the [next step](../step-04/README.md).

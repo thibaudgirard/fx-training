@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 	"errors"
-	"github.com/go-chi/chi/v5"
+	"fmt"
 	"go.uber.org/fx"
 	"net/http"
 )
 
-func NewServer(router *chi.Mux) *http.Server {
-	return &http.Server{Addr: ":8080", Handler: router}
+func NewServer(cfg *Config) *http.Server {
+	return &http.Server{Addr: fmt.Sprintf(":%d", cfg.Port)}
 }
 
 func StartServer(lc fx.Lifecycle, server *http.Server) {

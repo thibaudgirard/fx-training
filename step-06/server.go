@@ -5,31 +5,27 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-chi/chi/v5"
-	"github.com/rs/zerolog"
 	"go.uber.org/fx"
 	"net/http"
 )
 
-func NewServer(router *chi.Mux) *http.Server {
-	return &http.Server{Addr: ":8080", Handler: router}
+func NewServer(router *chi.Mux, cfg *Config) *http.Server {
+	return &http.Server{Addr: fmt.Sprintf(":%d", cfg.Port), Handler: router}
 }
 
-func StartServer(lc fx.Lifecycle, server *http.Server, logger *zerolog.Logger, shutdowner fx.Shutdowner) {
+func StartServer(lc fx.Lifecycle, server *http.Server) {
 	lc.Append(fx.Hook{
 		OnStart: func(_ context.Context) error {
-			logger.Info().Msg(fmt.Sprintf("HTTP server listening on %s", server.Addr))
 			go func() {
 				if err := server.ListenAndServe(); err != nil {
 					if !errors.Is(err, http.ErrServerClosed) {
-						logger.Error().Err(err).Caller().Msg("HTTP Server start failed")
-						shutdowner.Shutdown()
+						panic(err)
 					}
 				}
 			}()
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			logger.Info().Msg("Shutting down HTTP server")
 			return server.Shutdown(ctx)
 		},
 	})
